@@ -4,6 +4,7 @@ using MatrixSDK;
 using MatrixSDK.Client;
 using Nebuchadnezzar;
 using System.Threading;
+using System.Collections.Generic;
 
 
 public partial class MainWindow: Gtk.Window
@@ -58,27 +59,30 @@ public partial class MainWindow: Gtk.Window
 		column.AddAttribute (serviceCellRenderer, "text", 0);
 
 		foreach (var channel in rooms) {
-			if (channel.Name == null) {
-				if (channel.Members.Count == 2) {
-					var channelName = "";
-					foreach (var memberId in channel.Members.Keys) {
-						if (memberId != storage.UserId) {
-							var other = channel.Members [memberId];
-							if (other.displayname != null) {
-								channelName = other.displayname;
-							} else {
-								channelName = memberId;
-							}
-						}
-					}
-					liststore.AppendValues (channelName);
-				}
-			} else {
-				liststore.AppendValues (channel.Name);
-			}
+			liststore.AppendValues (getRoomLabel(channel));
 		}
 
 		Console.WriteLine ("Matrix thread done");
+	}
+
+	private string getRoomLabel(MatrixRoom room){
+		if (room.Name != null) {
+			return room.Name;
+		}
+
+		var members = new List<string> ();
+		foreach (var memberId in room.Members.Keys) {
+			if (memberId != this.user.UserID) {
+				var other = room.Members [memberId];
+				if (other.displayname != null) {
+					members.Add (other.displayname);
+				} else {
+					members.Add (memberId);
+				}
+			}
+		}
+
+		return string.Join (", ", members.ToArray ());
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
