@@ -29,6 +29,12 @@ public partial class MainWindow
 	
 	private global::Gtk.VBox vbox4;
 	
+	private global::Gtk.ScrolledWindow scrolledwindow1;
+	
+	private global::Gtk.VBox chatBox;
+	
+	private global::Gtk.Entry chatEntry;
+	
 	private global::Gtk.Statusbar statusbar;
 
 	protected virtual void Build ()
@@ -117,19 +123,49 @@ public partial class MainWindow
 		this.vbox4.Name = "vbox4";
 		this.vbox4.Spacing = 6;
 		this.vbox4.BorderWidth = ((uint)(6));
+		// Container child vbox4.Gtk.Box+BoxChild
+		this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
+		this.scrolledwindow1.CanFocus = true;
+		this.scrolledwindow1.Name = "scrolledwindow1";
+		this.scrolledwindow1.VscrollbarPolicy = ((global::Gtk.PolicyType)(0));
+		this.scrolledwindow1.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
+		this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child scrolledwindow1.Gtk.Container+ContainerChild
+		global::Gtk.Viewport w9 = new global::Gtk.Viewport ();
+		w9.ShadowType = ((global::Gtk.ShadowType)(0));
+		// Container child GtkViewport.Gtk.Container+ContainerChild
+		this.chatBox = new global::Gtk.VBox ();
+		this.chatBox.Name = "chatBox";
+		this.chatBox.Spacing = 6;
+		w9.Add (this.chatBox);
+		this.scrolledwindow1.Add (w9);
+		this.vbox4.Add (this.scrolledwindow1);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.scrolledwindow1]));
+		w12.Position = 0;
+		// Container child vbox4.Gtk.Box+BoxChild
+		this.chatEntry = new global::Gtk.Entry ();
+		this.chatEntry.CanFocus = true;
+		this.chatEntry.Name = "chatEntry";
+		this.chatEntry.IsEditable = true;
+		this.chatEntry.InvisibleChar = '●';
+		this.vbox4.Add (this.chatEntry);
+		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.chatEntry]));
+		w13.Position = 2;
+		w13.Expand = false;
+		w13.Fill = false;
 		this.hpaned1.Add (this.vbox4);
 		this.vbox2.Add (this.hpaned1);
-		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hpaned1]));
-		w10.Position = 1;
+		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hpaned1]));
+		w15.Position = 1;
 		// Container child vbox2.Gtk.Box+BoxChild
 		this.statusbar = new global::Gtk.Statusbar ();
 		this.statusbar.Name = "statusbar";
 		this.statusbar.Spacing = 6;
 		this.vbox2.Add (this.statusbar);
-		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.statusbar]));
-		w11.Position = 2;
-		w11.Expand = false;
-		w11.Fill = false;
+		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.statusbar]));
+		w16.Position = 2;
+		w16.Expand = false;
+		w16.Fill = false;
 		this.Add (this.vbox2);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
@@ -138,5 +174,6 @@ public partial class MainWindow
 		this.DefaultHeight = 627;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.channelList.CursorChanged += new global::System.EventHandler (this.OnChannelListCursorChanged);
 	}
 }

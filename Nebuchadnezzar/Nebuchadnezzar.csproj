@@ -57,12 +57,14 @@
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Posix" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Generic_Avatar.png" />
+    <EmbeddedResource Include="Assets\Encrypted_Overlay.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -73,6 +75,8 @@
     <Compile Include="LoginWindow.cs" />
     <Compile Include="gtk-gui\Nebuchadnezzar.LoginWindow.cs" />
     <Compile Include="Storage.cs" />
+    <Compile Include="AvatarGenerator.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,5 +84,8 @@
       <Project>{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}</Project>
       <Name>MatrixSDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
 </Project>

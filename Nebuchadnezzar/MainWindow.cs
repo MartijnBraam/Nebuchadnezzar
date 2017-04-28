@@ -5,12 +5,18 @@ using MatrixSDK.Client;
 using Nebuchadnezzar;
 using System.Threading;
 using System.Collections.Generic;
+using MatrixSDK.Structures;
 
 
 public partial class MainWindow: Gtk.Window
 {
 	public MatrixClient client;
 	public MatrixUser user;
+
+	public Dictionary<int, MatrixRoom> rooms = new Dictionary<int, MatrixRoom>();
+	public Dictionary<string, MatrixMRoomMember> users = new Dictionary<string, MatrixMRoomMember>();
+
+	public Dictionary<string, System.Drawing.Image> avatars = new Dictionary<string, System.Drawing.Image>();
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
@@ -48,20 +54,40 @@ public partial class MainWindow: Gtk.Window
 
 		var rooms = client.GetAllRooms ();
 
-		var column = new TreeViewColumn ();
-		column.Title = "Service";
-		channelList.AppendColumn (column);
-		var liststore = new ListStore (typeof(string));
-		channelList.Model = liststore;
+		channelList.AppendColumn("Icon", new Gtk.CellRendererPixbuf (), "pixbuf", 0);
+		channelList.AppendColumn ("Artist", new Gtk.CellRendererText (), "text", 1);
 
-		var serviceCellRenderer = new CellRendererText ();
-		column.PackStart (serviceCellRenderer, true);
-		column.AddAttribute (serviceCellRenderer, "text", 0);
 
+		var liststore = new ListStore (typeof(Gdk.Pixbuf) ,typeof(string));
+
+		int roomIndex = 0;
 		foreach (var channel in rooms) {
-			liststore.AppendValues (getRoomLabel(channel));
+			var label = getRoomLabel (channel);
+			var icon = AvatarGenerator.createRoomAvatar (label, channel.Encryption != null);
+			liststore.AppendValues (icon, label);
+			this.rooms.Add (roomIndex, channel);
+			roomIndex++;
+
+			foreach (var member in channel.Members) {
+				if (!this.users.ContainsKey (member.Key)) {
+					this.users.Add (member.Key, member.Value);
+				}
+			}
 		}
 
+		channelList.Model = liststore;
+		var avatar = client.DownloadMatrixContent (user.AvatarURL);
+		var avatarScaled = Utils.resizeImage (System.Drawing.Image.FromStream(avatar), 48, 48);
+		profileImage.Pixbuf = Utils.bitmapToPixbuf (avatarScaled);
+
+		foreach (var member in this.users) {
+			if (member.Value.avatar_url != null) {
+				var memberAvatar = client.DownloadMatrixContent (member.Value.avatar_url);
+				var scaled = Utils.resizeImage (System.Drawing.Image.FromStream (memberAvatar), 32, 32);
+				this.avatars.Add (member.Key, scaled);
+			}
+		}
+		refreshRoomList ();
 		Console.WriteLine ("Matrix thread done");
 	}
 
@@ -90,5 +116,80 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit ();
 		Environment.Exit (0);
 		a.RetVal = true;
+	}
+
+	protected void OnChannelListCursorChanged (object sender, EventArgs e)
+	{
+		if (channelList.Selection.CountSelectedRows () != 1) {
+			return;
+		}
+		var paths = channelList.Selection.GetSelectedRows ();
+		var index = paths [0].Indices [0];
+		loadRoom (this.rooms [index]);
+	}
+
+	protected void refreshRoomList(){
+		var liststore = new ListStore (typeof(Gdk.Pixbuf) ,typeof(string));
+		foreach (var channel in this.rooms.Values) {
+			var label = getRoomLabel (channel);
+			System.Drawing.Image avatar = null;
+
+			if (channel.Members.Count == 2) {
+				var other = getOtherRoomMember (channel);
+				if (this.avatars.ContainsKey (other)) {
+					avatar = this.avatars [other];
+				}
+			}
+
+			var icon = AvatarGenerator.createRoomAvatar (label, channel.Encryption != null, avatar);
+			liststore.AppendValues (icon, label);
+		}
+
+		channelList.Model = liststore;
+	}
+
+	private string getOtherRoomMember(MatrixRoom room){
+		foreach (var member in room.Members) {
+			if (member.Key != this.user.UserID) {
+				return member.Key;
+			}
+		}
+		throw new Exception ("Room without other member");
+	}
+
+	protected void loadRoom(MatrixRoom room){
+		foreach (var widget in chatBox.Children) {
+			chatBox.Remove (widget);
+		}
+
+		foreach (var message in room.Messages) {
+			Widget messageContents = null;
+			if (message.msgtype == "m.text") {
+				messageContents = new Label (message.body);
+				((Label)messageContents).Justify = Justification.Left;
+			}
+			if (messageContents != null) {
+				var messageContainer = new HBox ();
+				string senderName;
+
+				senderName = this.users [message.sender].displayname;
+				if (senderName == null) {
+					senderName = message.sender;
+				}
+				if (this.avatars.ContainsKey (message.sender)) {
+					var senderIcon = new System.Drawing.Bitmap(this.avatars [message.sender]);
+					messageContainer.PackStart (new Gtk.Image (Utils.bitmapToPixbuf(senderIcon)), false, false, 6);
+				} else {
+					var senderIcon = AvatarGenerator.createRoomAvatar (senderName);
+					messageContainer.PackStart (new Gtk.Image (senderIcon), false, false, 6);
+				}
+				messageContainer.PackStart (messageContents, false, false,6);
+				chatBox.PackStart (messageContainer, false, false, 0);
+			}
+
+			Console.WriteLine (message.msgtype);
+		}
+		chatBox.ShowAll ();
+
 	}
 }
