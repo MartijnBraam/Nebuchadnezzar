@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nebuchadnezzar", "Nebuchadnezzar\Nebuchadnezzar.csproj", "{45A079C4-C85D-41E6-85A3-9DCBE74C9772}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixSDK", "..\matrix-dotnet-sdk\MatrixSDK\MatrixSDK\MatrixSDK.csproj", "{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45A079C4-C85D-41E6-85A3-9DCBE74C9772}.Debug|x86.ActiveCfg = Debug|x86
+		{45A079C4-C85D-41E6-85A3-9DCBE74C9772}.Debug|x86.Build.0 = Debug|x86
+		{45A079C4-C85D-41E6-85A3-9DCBE74C9772}.Release|x86.ActiveCfg = Release|x86
+		{45A079C4-C85D-41E6-85A3-9DCBE74C9772}.Release|x86.Build.0 = Release|x86
+		{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
