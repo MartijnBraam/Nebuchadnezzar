@@ -58,6 +58,9 @@
     </Reference>
     <Reference Include="Mono.Posix" />
     <Reference Include="System.Drawing" />
+    <Reference Include="notify-sharp, Version=0.4.0.0, Culture=neutral, PublicKeyToken=2df29c54e245917a">
+      <Package>notify-sharp</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

@@ -6,6 +6,7 @@ using Nebuchadnezzar;
 using System.Threading;
 using System.Collections.Generic;
 using MatrixSDK.Structures;
+using Notifications;
 
 
 public partial class MainWindow: Gtk.Window
@@ -164,7 +165,15 @@ public partial class MainWindow: Gtk.Window
 
 	protected void onRoomMessage(MatrixRoom sender, MatrixEvent e){
 		if (sender == currentRoom) {
+			Console.WriteLine ("Got message in current room");
 			loadRoom (currentRoom);
+		} else {
+			Console.WriteLine ("Got message for another room");
+			var notification = new Notification ();
+			notification.Summary = getRoomLabel(sender);
+			notification.Body = e.content.ToString ();
+			notification.IconName = "dialog-information";
+			notification.Show ();
 		}
 	}
 
