@@ -84,12 +84,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\matrix-dotnet-sdk\MatrixSDK\MatrixSDK\MatrixSDK.csproj">
+    <Folder Include="Assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\matrix-dotnet-sdk\MatrixSDK\MatrixSDK\MatrixSDK.csproj">
       <Project>{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}</Project>
       <Name>MatrixSDK</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
   </ItemGroup>
 </Project>

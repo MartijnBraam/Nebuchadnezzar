@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nebuchadnezzar", "Nebuchadnezzar\Nebuchadnezzar.csproj", "{45A079C4-C85D-41E6-85A3-9DCBE74C9772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixSDK", "..\matrix-dotnet-sdk\MatrixSDK\MatrixSDK\MatrixSDK.csproj", "{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixSDK", "matrix-dotnet-sdk\MatrixSDK\MatrixSDK\MatrixSDK.csproj", "{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

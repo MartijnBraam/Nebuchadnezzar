@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF7A3DBC-EFBD-43D2-8609-CCAB4A9DFA07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MatrixSDK</RootNamespace>
+    <AssemblyName>MatrixSDK</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Package>monodevelop</Package>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\packages\NLog.4.4.9\lib\net45\NLog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\..\packages\YamlDotNet.4.1.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="MatrixAPI.cs" />
+    <Compile Include="Structures\MatrixLogin.cs" />
+    <Compile Include="Structures\MatrixProfile.cs" />
+    <Compile Include="Structures\MatrixSync.cs" />
+    <Compile Include="Structures\MatrixEvent.cs" />
+    <Compile Include="Structures\MatrixEventRoom.cs" />
+    <Compile Include="JSONEventConverter.cs" />
+    <Compile Include="Structures\Events\MatrixMPresence.cs" />
+    <Compile Include="Structures\Events\MatrixMRoom.cs" />
+    <Compile Include="Structures\Events\MatrixMRoomMessage.cs" />
+    <Compile Include="Structures\MatrixFileInfo.cs" />
+    <Compile Include="Structures\Events\MatrixMRoomMember.cs" />
+    <Compile Include="Structures\MatrixInvite.cs" />
+    <Compile Include="Structures\MatrixStrippedState.cs" />
+    <Compile Include="Structures\Events\MatrixMRoomPowerLevels.cs" />
+    <Compile Include="Structures\Events\MatrixMReceipt.cs" />
+    <Compile Include="Structures\MatrixCreateRoom.cs" />
+    <Compile Include="JSONSerializer.cs" />
+    <Compile Include="Client\MatrixRoom.cs" />
+    <Compile Include="Client\MatrixUser.cs" />
+    <Compile Include="Client\MatrixClient.cs" />
+    <Compile Include="MatrixAttributes.cs" />
+    <Compile Include="Backends\HttpBackend.cs" />
+    <Compile Include="Backends\IMatrixAPIBackend.cs" />
+    <Compile Include="Backends\MatrixRequestError.cs" />
+    <Compile Include="Backends\MatrixErrorCode.cs" />
+    <Compile Include="Client\MatrixMediaFile.cs" />
+    <Compile Include="AppService\MatrixAppservice.cs" />
+    <Compile Include="AppService\ServiceRegistration.cs" />
+    <Compile Include="Structures\MatrixTyping.cs" />
+    <Compile Include="Backends\TestHttpClient.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Structures\" />
+    <Folder Include="Structures\Events\" />
+    <Folder Include="Client\" />
+    <Folder Include="Backends\" />
+    <Folder Include="AppService\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
