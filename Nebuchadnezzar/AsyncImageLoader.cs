@@ -62,7 +62,8 @@ namespace Nebuchadnezzar
 		}
 
 		private void LoadingRoutine(){
-			var imageData = this.client.DownloadMatrixContent (this.message.url);
+			var cache = new Cache (this.client);
+			var imageData = cache.GetContentObject (this.message.url);
 			var scaled = Utils.resizeImage (System.Drawing.Image.FromStream (imageData), this.thumbSize.Width, this.thumbSize.Height);
 			if (this.widget != null) {
 				Gtk.Application.Invoke (delegate {

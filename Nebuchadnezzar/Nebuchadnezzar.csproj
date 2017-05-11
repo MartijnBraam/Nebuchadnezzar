@@ -81,6 +81,7 @@
     <Compile Include="AvatarGenerator.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="AsyncImageLoader.cs" />
+    <Compile Include="Cache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

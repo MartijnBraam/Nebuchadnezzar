@@ -32,6 +32,30 @@ namespace Nebuchadnezzar
 			get { return (String)this["Token"]; }
 			set { this["Token"] = value; }
 		}
+
+		[UserScopedSettingAttribute()]
+		[DefaultSettingValueAttribute("true")]
+		public bool CacheAvatars
+		{
+			get { return (bool)this["CacheAvatars"]; }
+			set { this["CacheAvatars"] = value; }
+		}
+
+		[UserScopedSettingAttribute()]
+		[DefaultSettingValueAttribute("true")]
+		public bool CacheChatData
+		{
+			get { return (bool)this["CacheChatData"]; }
+			set { this["CacheChatData"] = value; }
+		}
+
+		[UserScopedSettingAttribute()]
+		[DefaultSettingValueAttribute("false")]
+		public bool CacheEncrypted
+		{
+			get { return (bool)this["CacheEncrypted"]; }
+			set { this["CacheEncrypted"] = value; }
+		}
 	}
 }
 

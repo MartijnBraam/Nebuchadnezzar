@@ -14,6 +14,7 @@ public partial class MainWindow: Gtk.Window
 	public MatrixClient client;
 	public MatrixUser user;
 	public MatrixRoom currentRoom;
+	public Cache cache;
 
 	public Dictionary<int, MatrixRoom> rooms = new Dictionary<int, MatrixRoom>();
 	public Dictionary<string, MatrixMRoomMember> users = new Dictionary<string, MatrixMRoomMember>();
@@ -33,6 +34,7 @@ public partial class MainWindow: Gtk.Window
 		var storage = new Storage ();
 
 		client = new MatrixClient (storage.Server);
+		cache = new Cache (client);
 
 		try{
 			client.UseExistingToken (storage.UserId, storage.Token);
@@ -78,13 +80,13 @@ public partial class MainWindow: Gtk.Window
 		}
 
 		channelList.Model = liststore;
-		var avatar = client.DownloadMatrixContent (user.AvatarURL);
+		var avatar = cache.GetAvatarObject (user.AvatarURL);
 		var avatarScaled = Utils.resizeImage (System.Drawing.Image.FromStream(avatar), 48, 48);
 		profileImage.Pixbuf = Utils.bitmapToPixbuf (avatarScaled);
 
 		foreach (var member in this.users) {
 			if (member.Value.avatar_url != null) {
-				var memberAvatar = client.DownloadMatrixContent (member.Value.avatar_url);
+				var memberAvatar = cache.GetAvatarObject (member.Value.avatar_url);
 				var scaled = Utils.resizeImage (System.Drawing.Image.FromStream (memberAvatar), 32, 32);
 				this.avatars.Add (member.Key, scaled);
 			}
