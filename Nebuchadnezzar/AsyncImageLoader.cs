@@ -64,10 +64,11 @@ namespace Nebuchadnezzar
 		private void LoadingRoutine(){
 			var imageData = this.client.DownloadMatrixContent (this.message.url);
 			var scaled = Utils.resizeImage (System.Drawing.Image.FromStream (imageData), this.thumbSize.Width, this.thumbSize.Height);
-
-			Gtk.Application.Invoke (delegate {
-				this.widget.Pixbuf = Utils.bitmapToPixbuf(scaled);
-			});
+			if (this.widget != null) {
+				Gtk.Application.Invoke (delegate {
+					this.widget.Pixbuf = Utils.bitmapToPixbuf (scaled);
+				});
+			}
 		}
 	}
 }

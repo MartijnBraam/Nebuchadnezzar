@@ -166,7 +166,9 @@ public partial class MainWindow: Gtk.Window
 	protected void onRoomMessage(MatrixRoom sender, MatrixEvent e){
 		if (sender == currentRoom) {
 			Console.WriteLine ("Got message in current room");
-			loadRoom (currentRoom);
+			Gtk.Application.Invoke (delegate {
+				loadRoom (currentRoom);
+			});
 		} else {
 			Console.WriteLine ("Got message for another room");
 			var notification = new Notification ();
