@@ -12,6 +12,7 @@ public partial class MainWindow: Gtk.Window
 {
 	public MatrixClient client;
 	public MatrixUser user;
+	public MatrixRoom currentRoom;
 
 	public Dictionary<int, MatrixRoom> rooms = new Dictionary<int, MatrixRoom>();
 	public Dictionary<string, MatrixMRoomMember> users = new Dictionary<string, MatrixMRoomMember>();
@@ -143,6 +144,10 @@ public partial class MainWindow: Gtk.Window
 
 			var icon = AvatarGenerator.createRoomAvatar (label, channel.Encryption != null, avatar);
 			liststore.AppendValues (icon, label);
+
+			channel.OnMessage -= onRoomMessage;
+			channel.OnMessage += onRoomMessage;
+
 		}
 
 		channelList.Model = liststore;
@@ -157,7 +162,15 @@ public partial class MainWindow: Gtk.Window
 		throw new Exception ("Room without other member");
 	}
 
+	protected void onRoomMessage(MatrixRoom sender, MatrixEvent e){
+		if (sender == currentRoom) {
+			loadRoom (currentRoom);
+		}
+	}
+
 	protected void loadRoom(MatrixRoom room){
+		this.currentRoom = room;
+
 		foreach (var widget in chatBox.Children) {
 			chatBox.Remove (widget);
 		}
@@ -202,5 +215,21 @@ public partial class MainWindow: Gtk.Window
 		}
 		chatBox.ShowAll ();
 
+	}
+
+	protected void OnChatEntryActivated (object sender, EventArgs e)
+	{
+		var message = this.chatEntry.Text;
+		this.chatEntry.Text = "";
+
+		if (this.currentRoom != null) {
+			this.currentRoom.SendMessage (message);
+		}
+	}
+
+	protected void OnChatBoxSizeAllocated (object o, SizeAllocatedArgs args)
+	{
+		var adj = this.chatScroller.Vadjustment;
+		this.chatScroller.Vadjustment.Value = adj.Upper - adj.PageSize;
 	}
 }

@@ -29,7 +29,7 @@ public partial class MainWindow
 	
 	private global::Gtk.VBox vbox4;
 	
-	private global::Gtk.ScrolledWindow scrolledwindow1;
+	private global::Gtk.ScrolledWindow chatScroller;
 	
 	private global::Gtk.VBox chatBox;
 	
@@ -124,13 +124,13 @@ public partial class MainWindow
 		this.vbox4.Spacing = 6;
 		this.vbox4.BorderWidth = ((uint)(6));
 		// Container child vbox4.Gtk.Box+BoxChild
-		this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
-		this.scrolledwindow1.CanFocus = true;
-		this.scrolledwindow1.Name = "scrolledwindow1";
-		this.scrolledwindow1.VscrollbarPolicy = ((global::Gtk.PolicyType)(0));
-		this.scrolledwindow1.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
-		this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-		// Container child scrolledwindow1.Gtk.Container+ContainerChild
+		this.chatScroller = new global::Gtk.ScrolledWindow ();
+		this.chatScroller.CanFocus = true;
+		this.chatScroller.Name = "chatScroller";
+		this.chatScroller.VscrollbarPolicy = ((global::Gtk.PolicyType)(0));
+		this.chatScroller.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
+		this.chatScroller.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child chatScroller.Gtk.Container+ContainerChild
 		global::Gtk.Viewport w9 = new global::Gtk.Viewport ();
 		w9.ShadowType = ((global::Gtk.ShadowType)(0));
 		// Container child GtkViewport.Gtk.Container+ContainerChild
@@ -138,9 +138,9 @@ public partial class MainWindow
 		this.chatBox.Name = "chatBox";
 		this.chatBox.Spacing = 6;
 		w9.Add (this.chatBox);
-		this.scrolledwindow1.Add (w9);
-		this.vbox4.Add (this.scrolledwindow1);
-		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.scrolledwindow1]));
+		this.chatScroller.Add (w9);
+		this.vbox4.Add (this.chatScroller);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.chatScroller]));
 		w12.Position = 0;
 		// Container child vbox4.Gtk.Box+BoxChild
 		this.chatEntry = new global::Gtk.Entry ();
@@ -175,5 +175,7 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.channelList.CursorChanged += new global::System.EventHandler (this.OnChannelListCursorChanged);
+		this.chatBox.SizeAllocated += new global::Gtk.SizeAllocatedHandler (this.OnChatBoxSizeAllocated);
+		this.chatEntry.Activated += new global::System.EventHandler (this.OnChatEntryActivated);
 	}
 }

@@ -125,7 +125,7 @@
                 <property name="Spacing">6</property>
                 <property name="BorderWidth">6</property>
                 <child>
-                  <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+                  <widget class="Gtk.ScrolledWindow" id="chatScroller">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="VscrollbarPolicy">Always</property>
@@ -139,6 +139,7 @@
                           <widget class="Gtk.VBox" id="chatBox">
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
+                            <signal name="SizeAllocated" handler="OnChatBoxSizeAllocated" />
                             <child>
                               <placeholder />
                             </child>
@@ -167,6 +168,7 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
+                    <signal name="Activated" handler="OnChatEntryActivated" />
                   </widget>
                   <packing>
                     <property name="Position">2</property>
