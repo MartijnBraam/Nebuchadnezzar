@@ -168,6 +168,17 @@ public partial class MainWindow: Gtk.Window
 				messageContents = new Label (message.body);
 				((Label)messageContents).Justify = Justification.Left;
 			}
+			if (message.msgtype == "m.image") {
+				messageContents = new VBox ();
+				var imageLabel = new Label (message.body);
+				imageLabel.Justify = Justification.Left;
+
+				var loader = new AsyncImageLoader ((MMessageImage)message, this.client);
+				var imageContents = loader.GetImageWidget (250, 200);
+
+				((VBox)messageContents).PackStart (imageLabel);
+				((VBox)messageContents).PackStart (imageContents);
+			}
 			if (messageContents != null) {
 				var messageContainer = new HBox ();
 				string senderName;
