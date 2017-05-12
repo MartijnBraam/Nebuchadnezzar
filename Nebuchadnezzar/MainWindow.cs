@@ -213,13 +213,17 @@ public partial class MainWindow: Gtk.Window
 				if (senderName == null) {
 					senderName = message.sender;
 				}
+
+				var alignmentBox = new Gtk.Alignment (0, -1, 0, 0);
 				if (this.avatars.ContainsKey (message.sender)) {
 					var senderIcon = new System.Drawing.Bitmap(this.avatars [message.sender]);
-					messageContainer.PackStart (new Gtk.Image (Utils.bitmapToPixbuf(senderIcon)), false, false, 6);
+					alignmentBox.Add (new Gtk.Image (Utils.bitmapToPixbuf (senderIcon)));
 				} else {
 					var senderIcon = AvatarGenerator.createRoomAvatar (senderName);
-					messageContainer.PackStart (new Gtk.Image (senderIcon), false, false, 6);
+					alignmentBox.Add(new Gtk.Image (senderIcon));
 				}
+				messageContainer.PackStart (alignmentBox, false, false, 6);
+
 				messageContainer.PackStart (messageContents, false, false,6);
 				chatBox.PackStart (messageContainer, false, false, 0);
 			}

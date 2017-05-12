@@ -140,7 +140,6 @@
                           <widget class="Gtk.VBox" id="chatBox">
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
-                            <signal name="SizeAllocated" handler="OnChatBoxSizeAllocated" />
                             <child>
                               <placeholder />
                             </child>
@@ -169,7 +168,6 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
-                    <signal name="Activated" handler="OnChatEntryActivated" />
                   </widget>
                   <packing>
                     <property name="Position">2</property>

@@ -175,7 +175,5 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.channelList.CursorChanged += new global::System.EventHandler (this.OnChannelListCursorChanged);
-		this.chatBox.SizeAllocated += new global::Gtk.SizeAllocatedHandler (this.OnChatBoxSizeAllocated);
-		this.chatEntry.Activated += new global::System.EventHandler (this.OnChatEntryActivated);
 	}
 }
